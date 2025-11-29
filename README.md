@@ -1,6 +1,6 @@
 # gdoc2site
 
-`gdoc2site` is a Python tool that exports every **tab** in a Google Doc as a standalone HTML page, producing a complete static website. Each tab becomes a separate HTML file wrapped in a Jinja2 template, with Google redirect URLs cleaned and content simplified for deployment.
+`gdoc2site` is a Python tool that exports every **tab** in a Google Doc as a standalone HTML page. Each tab becomes a separate HTML file containing styling provided by a supplied Jinja2 template in `base.html`, with Google redirect URLs cleaned and content simplified for deployment.
 
 This repository contains the main script: **`gdoc2site.py`**.
 
@@ -21,21 +21,22 @@ This repository contains the main script: **`gdoc2site.py`**.
 ---
 
 ## 📦 Setup
+- Clone repository, create virtual environment, and itnstall dependencies:
+```bash
+git clone https://github.com/wu4f/gdoc2site
+cd gdoc2site
+virtualenv -p python3 env
+source env/bin/activate
+pip install -r requirements.txt
+```
 
-- Create Google Cloud Project and Enable Google Docs and Drive APIs
 - Create OAuth Credentials
+  - Create Google Cloud Project and Enable Google Docs and Drive APIs
   - APIs & Services -> Credentials
   - OAuth Client ID -> Desktop Application
   - Download JSON credential file and save it in credentials.json
-
-The first run will launch a browser window for authentication and create
+  - The first run will launch a browser window for authentication and create
 token.json.
-
-- Install dependencies via:
-
-```bash
-pip install -r requirements.txt
-```
 
 ---
 
@@ -43,10 +44,10 @@ pip install -r requirements.txt
 
 - Export all tabs
 ```bash
-python gdoc2site.py
+python gdoc2site.py <DOC_ID>
 ```
 
 - Export specific tab (exports only the tab with the matching ID)
 ```bash
-python gdoc2site.py <TAB_ID>
+python gdoc2site.py <DOC_ID> <TAB_ID>
 ```
