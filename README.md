@@ -35,7 +35,7 @@ token.json.
 
 ```bash
 pip install -r requirements.txt
-'''
+```
 
 ---
 
