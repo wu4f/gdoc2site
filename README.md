@@ -1,22 +1,20 @@
 # gdoc2site
 
-`gdoc2site` is a Python tool that exports every **tab** in a Google Doc as a standalone HTML page. Each tab becomes a separate HTML file containing styling provided by a supplied Jinja2 template in `base.html`, with Google redirect URLs cleaned and content simplified for deployment.
-
-This repository contains the main script: **`gdoc2site.py`**.
+`gdoc2site` is a Python script that exports every **tab** in a Google Doc as a standalone HTML page. Each tab is saved to a separate HTML file containing styling provided by a shared Jinja2 template in `base.html`.
 
 ---
 
 ## ✨ Features
 
-- Exports **each tab** from a Google Doc as its own HTML file  
+- Exports **each tab** from a Google Doc to its own HTML file  
 - Supports exporting:
   - **All tabs**
   - **A single tab** (via command-line argument)
-- Cleans wrapped Google redirect links (e.g., `https://www.google.com/url?q=...`)
-- Extracts only the `<body>` content from Google’s HTML export
-- Applies a Jinja2-based HTML template (`base.html`) to each exported page
-- Outputs to an `articles/` directory
 - Handles OAuth authentication automatically (stores `token.json`)
+- Extracts the `<body>` content from Google’s HTML export
+- Cleans wrapped Google redirect links (e.g., `https://www.google.com/url?q=...`)
+- Applies a Jinja2-based HTML template (`base.html`) to each exported page
+- Outputs each page to an `articles/` directory
 
 ---
 
