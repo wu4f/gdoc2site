@@ -1,10 +1,3 @@
-# Takes a Google Doc ID and exports each tab in it as HTML within articles
-# directory
-# 1. Enabled both Google Drive API and Google Docs API in GCP project pdx-cs
-# 2. Added an OAuth2 client and retrieved its JSON credentials at
-# credentials.json
-# 3. Upon invocation, do the Auth to get an OAuth token for the rest of the
-# accesses
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
@@ -16,8 +9,17 @@ from bs4 import BeautifulSoup
 import time
 import os
 import sys
-# If modifying these scopes, delete the file token.json.
+
 SCOPES = ['https://www.googleapis.com/auth/drive.readonly', 'https://www.googleapis.com/auth/docs.readonly']
+
+def print_usage():
+    print("Usage:")
+    print("  python gdoc2site.py <doc_id>")
+    print("  python gdoc2site.py <doc_id> <tab_id>")
+    print("")
+    print("Examples:")
+    print("  python gdoc2site.py 11az...GacI9M")
+    print("  python gdoc2site.py 11az...GacI9M t.3fbo....9zik")
 
 def clean_content(html):
     def unwrap_google_url(url):
@@ -122,14 +124,22 @@ def get_creds():
     return creds
 
 if __name__ == '__main__':
-    try:
-        tab_id = sys.argv[1]
-        print(f"Exporting: {tab_id}")
-    except IndexError:
-        tab_id = 0
-        pass
+    if len(sys.argv) == 2:
+        # e.g. doc_id = '11azwsMnSUPpR9ClIHSqZ3AcLvKdo0VqBMQyO9GacI9M'
+        doc_id = sys.argv[1]
+        tab_id = None
+        print(f"Exporting all tabs in doc: {doc_id}")
+    elif len(sys.argv) == 3:
+        # e.g. doc_id = '11azwsMnSUPpR9ClIHSqZ3AcLvKdo0VqBMQyO9GacI9M'
+        #      tab_id = 't.3fbogwqz9zik'
+        doc_id = sys.argv[1]
+        tab_id = sys.argv[2]
+        print(f"Exporting tab {tab_id} from doc: {doc_id}")
+    else:
+        print_usage()
+        exit()
+
     creds = get_creds()
-    doc_id = '11azwsMnSUPpR9ClIHSqZ3AcLvKdo0VqBMQyO9GacI9M'
     tabs = get_tabs_from_doc(creds, doc_id)
 
     if tab_id:
