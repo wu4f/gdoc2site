@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 import time
 import os
 import sys
+import re
 
 SCOPES = ['https://www.googleapis.com/auth/drive.readonly', 'https://www.googleapis.com/auth/docs.readonly']
 
@@ -20,6 +21,43 @@ def print_usage():
     print("Examples:")
     print("  python gdoc2site.py 11az...GacI9M")
     print("  python gdoc2site.py 11az...GacI9M t.3fbo....9zik")
+
+def filter_bold_italic(css_text):
+    # Regex to separate "Selector { Content }"
+    # ([^{]+) captures the selector
+    # ([^}]+) captures the properties inside
+    pattern = r"([^{]+)\{([^}]+)\}"
+    matches = re.findall(pattern, css_text)
+    cleaned_output = []
+
+    for selector, content in matches:
+        selector = selector.strip()
+        
+        # 1. Process only class selectors (lines starting with or containing a dot)
+        if "." in selector:
+            # 2. Split properties by semicolon
+            props = content.split(';')
+            kept_props = []
+
+            for prop in props:
+                if ":" in prop:
+                    key, value = prop.split(':', 1)
+                    key = key.strip().lower()
+                    
+                    # 3. Filter: Keep only weight (bold) and style (italic)
+                    if key in ['font-weight', 'font-style']:
+                        kept_props.append(f"{key}:{value}")
+
+            # 4. Only rebuild the rule if there are properties left to keep
+            if kept_props:
+                # Clean up selector (handling the @import edge case if attached to the first match)
+                if ";" in selector: 
+                    selector = selector.split(";")[-1]
+                    
+                new_rule = f"{selector}{{{';'.join(kept_props)}}}"
+                cleaned_output.append(new_rule)
+
+    return "\n".join(cleaned_output)
 
 def clean_content(html):
     def unwrap_google_url(url):
@@ -42,11 +80,14 @@ def clean_content(html):
         a["href"] = cleaned    
 
     body_tag = soup.find("body")
-
     if body_tag:
-        body_html_content = body_tag.prettify() # or str(body_tag)
+        body_html_content = body_tag.prettify()
 
-    return body_html_content
+    style_tag = soup.find("style")
+    if style_tag:
+        cleaned_style_content = filter_bold_italic(style_tag.prettify())
+        style_html_content = f"""<style type="text/css">{cleaned_style_content}</style>"""
+    return body_html_content, style_html_content
     
 
 def export_tab_as_html(creds, doc_id, tab_name, tab_id):
@@ -70,11 +111,11 @@ def export_tab_as_html(creds, doc_id, tab_name, tab_id):
         time.sleep(1)
         response = requests.get(export_url, headers=headers)
 
-    body_html_content = clean_content(response.text)
+    body_html_content, style_html_content = clean_content(response.text)
     with open('base.html', 'r', encoding='utf-8') as file:
         template_content = file.read()
         template = jinja2.Template(template_content)
-        rendered_html = template.render(title=tab_name, body=body_html_content)
+        rendered_html = template.render(title=tab_name, body=body_html_content, style=style_html_content)
 
     with open(f"articles/{output_filename}", 'wb') as f:
         f.write(rendered_html.encode('utf-8'))
