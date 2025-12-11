@@ -100,8 +100,8 @@ def export_tab_as_html(creds, doc_id, tab_name, tab_id):
         tab_name (str): The title of the tab you want to export.
         tab_id (str): The id of the tab you want to export.
     """
-    os.makedirs("articles", exist_ok=True)
-    output_filename = f"""{tab_name.replace(" ","-").lower()}.html"""
+    target_dir = os.path.join("articles", tab_name.replace(" ","-").lower())
+    os.makedirs(target_dir, exist_ok=True)
     export_url = (f"https://docs.google.com/document/d/{doc_id}/export"
             f"?format=html&id={doc_id}&tab={tab_id}")
 
@@ -117,10 +117,10 @@ def export_tab_as_html(creds, doc_id, tab_name, tab_id):
         template = jinja2.Template(template_content)
         rendered_html = template.render(title=tab_name, body=body_html_content, style=style_html_content)
 
-    with open(f"articles/{output_filename}", 'wb') as f:
+    with open(f"{target_dir}/index.html", 'wb') as f:
         f.write(rendered_html.encode('utf-8'))
 
-    print(f"Successfully exported Google Doc '{doc_id}' as '{output_filename}'")
+    print(f"Successfully exported Google Doc '{doc_id}' as '{target_dir}/index.html'")
 
 def get_tabs_from_doc(creds, doc_id):
     service = build('docs', 'v1', credentials=creds)
