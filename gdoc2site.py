@@ -45,7 +45,7 @@ def filter_bold_italic(css_text):
                     key = key.strip().lower()
                     
                     # 3. Filter: Keep only weight (bold) and style (italic)
-                    if key in ['font-weight', 'font-style']:
+                    if key in ['font-weight', 'font-style', 'color', 'text-decoration']:
                         kept_props.append(f"{key}:{value}")
 
             # 4. Only rebuild the rule if there are properties left to keep
