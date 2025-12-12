@@ -10,8 +10,10 @@ import time
 import os
 import sys
 import re
+from datetime import datetime, timezone
 
-SCOPES = ['https://www.googleapis.com/auth/drive.readonly', 'https://www.googleapis.com/auth/docs.readonly']
+
+SCOPES = ['https://www.googleapis.com/auth/drive.readonly', 'https://www.googleapis.com/auth/drive.metadata.readonly', 'https://www.googleapis.com/auth/docs.readonly']
 
 def print_usage():
     print("Usage:")
@@ -164,6 +166,40 @@ def get_creds():
             token.write(creds.to_json())
     return creds
 
+def doc_has_changed(creds, doc_id):
+    """
+    Returns True if the Google Doc has changed since the last check.
+    Uses ONLY the Docs API (document.revisionId).
+
+    True  -> doc changed OR no timestamp file yet
+    False -> doc unchanged
+    """
+    timestamp_file = f"{doc_id}.timestamp"
+
+    # --- Fetch revisionId from Docs API ---
+    docs = build("docs", "v1", credentials=creds)
+    doc = docs.documents().get(documentId=doc_id, fields="revisionId").execute()
+    remote_rev = str(doc["revisionId"])   # revisionId is an integer-like string
+
+    # --- If no saved revision, store and return True ---
+    if not os.path.exists(timestamp_file):
+        with open(timestamp_file, "w") as f:
+            f.write(remote_rev)
+        return True
+
+    # --- Load stored revision ---
+    with open(timestamp_file, "r") as f:
+        local_rev = f.read().strip()
+
+    # --- If different, update and return True ---
+    if local_rev != remote_rev:
+        with open(timestamp_file, "w") as f:
+            f.write(remote_rev)
+        return True
+
+    # Same revision → no change
+    return False
+
 if __name__ == '__main__':
     if len(sys.argv) == 2:
         # e.g. doc_id = '11azwsMnSUPpR9ClIHSqZ3AcLvKdo0VqBMQyO9GacI9M'
@@ -180,7 +216,12 @@ if __name__ == '__main__':
         print_usage()
         exit()
 
+    print(doc_id)
     creds = get_creds()
+
+    if doc_has_changed(creds, doc_id) is False:
+        exit()
+
     tabs = get_tabs_from_doc(creds, doc_id)
 
     if tab_id:
