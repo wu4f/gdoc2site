@@ -1,0 +1,368 @@
+/* pdx-style.css
+   Mimics styling of: https://www.pdx.edu/academics/programs/graduate/cybersecurity-graduate-certificate
+   Colors based on PSU brand guidelines.
+   Author: ChatGPT (GPT-5 Thinking mini)
+*/
+
+/* ----- Theme variables ----- */
+:root{
+  --psu-green: #6d8d24;        /* PSU Green (primary) */
+  --psu-electric: #cfd82d;     /* Electric green (accent) */
+  --psu-forest: #213921;       /* Forest green (dark) */
+  --psu-gray-900: #111111;
+  --psu-gray-700: #4d4d4d;
+  --psu-gray-400: #9b9b9b;
+  --psu-muted-bg: #f6f7f8;
+  --white: #ffffff;
+
+  --max-content-width: 1100px;
+  --container-padding: 20px;
+  --radius: 8px;
+
+  --font-sans: "Helvetica Neue", Arial, Helvetica, sans-serif;
+  --font-heading: "Montserrat", var(--font-sans);
+  --base-font-size: 16px;
+}
+
+/* ----- Global reset / base ----- */
+* { box-sizing: border-box; }
+body{
+  margin:10px;
+  margin-bottom:20px;
+  font-family: var(--font-sans);
+  font-size: var(--base-font-size);
+  color: var(--psu-gray-900);
+  background: var(--white);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.55;
+}
+
+/* Utility container for central column */
+.container{
+  width: 100%;
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+/* ----- Top banner / global header ----- */
+.top-banner{
+  background: var(--psu-forest);
+  color: var(--white);
+  text-align:center;
+  padding: 8px 10px;
+  font-size: 13px;
+  letter-spacing: .02em;
+}
+
+/* primary header (site chrome) */
+.site-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 20px;
+  padding: 14px var(--container-padding);
+  border-bottom:1px solid #e6e6e6;
+  background: linear-gradient(180deg, #fff, #fbfbfb);
+}
+.site-brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.site-brand img{
+  height:42px;
+  width:auto;
+  display:block;
+}
+.site-nav{
+  display:flex;
+  gap:18px;
+  align-items:center;
+  font-size:15px;
+}
+.site-nav a{
+  color:var(--psu-gray-900);
+  text-decoration:none;
+  padding:8px 10px;
+  border-radius:6px;
+}
+.site-nav a:hover,
+.site-nav a:focus{ background: #f1f1f1; outline:none; }
+
+/* small action buttons (Apply, Request Info) */
+.header-actions{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+.btn{
+  display:inline-block;
+  font-weight:600;
+  padding:8px 14px;
+  border-radius:6px;
+  cursor:pointer;
+  text-decoration:none;
+  border:1px solid transparent;
+}
+.btn-primary{
+  background: var(--psu-green);
+  color: var(--white);
+  border-color: rgba(0,0,0,0.06);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.04) inset;
+}
+.btn-outline{
+  background: transparent;
+  color: var(--psu-green);
+  border-color: var(--psu-green);
+}
+
+/* ----- Breadcrumb / page title area ----- */
+.breadcrumb{
+  font-size:13px;
+  color:var(--psu-gray-700);
+  margin-top:14px;
+}
+
+.page-hero{
+  display:flex;
+  align-items:center;
+  gap: 20px;
+  padding: 18px 0 14px;
+}
+.page-hero .hero-image{
+  flex:0 0 160px;
+  height:100px;
+  background-size:cover;
+  background-position:center;
+  border-radius:6px;
+  box-shadow: 0 6px 18px rgba(16,24,32,0.06);
+}
+.page-hero .page-title{
+  flex:1;
+}
+h1.page-title{
+  font-family: var(--font-heading);
+  margin:0 0 6px;
+  font-size:28px;
+  font-weight:700;
+  color:var(--psu-forest);
+  line-height:1.15;
+}
+.lead-meta{
+  color:var(--psu-gray-700);
+  font-size:14px;
+}
+
+/* ----- Main layout: content + sidebar ----- */
+.main{
+  display:grid;
+  grid-template-columns: 1fr 320px;
+  gap:32px;
+  margin-top:18px;
+  margin-bottom:38px;
+}
+@media (max-width: 880px){
+  .main{ grid-template-columns: 1fr; }
+}
+
+/* page content styling */
+.article{
+  background: var(--white);
+}
+.article h2, .article h3{
+  font-family: var(--font-heading);
+  color:var(--psu-forest);
+  margin-top:18px;
+  margin-bottom:8px;
+}
+.article h2{ font-size:20px; }
+.article h3{ font-size:18px; }
+.article p{
+  color:var(--psu-gray-900);
+  margin: 0 0 14px;
+  font-size:15px;
+}
+
+/* lists */
+.article ul, .article ol{
+  margin: 0 0 16px 1.25rem;
+}
+
+/* program stats card (small inline summary) */
+.stats-row{
+  display:flex;
+  gap:18px;
+  margin:12px 0 18px;
+  flex-wrap:wrap;
+}
+.stat{
+  background: var(--psu-muted-bg);
+  padding:12px 14px;
+  border-radius:8px;
+  min-width:120px;
+  text-align:center;
+}
+.stat .num{ font-weight:700; font-size:18px; display:block; color:var(--psu-forest);}
+.stat .label{ font-size:13px; color:var(--psu-gray-700); }
+
+/* ----- Sidebar widgets ----- */
+.sidebar{
+  position:relative;
+  top:0;
+}
+.widget{
+  background: #fff;
+  border:1px solid #eee;
+  padding:16px;
+  border-radius:8px;
+  margin-bottom:18px;
+}
+.widget h4{ margin:0 0 8px; font-size:15px; color:var(--psu-forest); }
+.contact-card .cta{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.contact-card .phone{
+  font-weight:700;
+  color:var(--psu-gray-900);
+}
+.inline-cta{
+  display:inline-block;
+  margin-top:8px;
+}
+
+/* quick link list */
+.widget a{
+  display:block;
+  color:var(--psu-green);
+  text-decoration:none;
+  padding:6px 0;
+  border-radius:4px;
+}
+.widget a:hover{ text-decoration:underline; }
+
+/* ----- Buttons and links ----- */
+a, button{ color: var(--psu-green); }
+a:focus, button:focus{ outline: 3px solid rgba(109,141,36,0.18); outline-offset:2px; border-radius:4px; }
+
+/* primary action card style (right under title or in hero) */
+.action-strip{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  margin-top:10px;
+}
+.pulse-cta{
+  background: linear-gradient(90deg, var(--psu-green), var(--psu-electric));
+  color: #fff;
+  padding:10px 14px;
+  border-radius:8px;
+  font-weight:700;
+  text-decoration:none;
+}
+.pulse-cta.secondary{
+  background: transparent;
+  color:var(--psu-green);
+  border:2px solid var(--psu-green);
+}
+
+/* ----- Content blocks and separators ----- */
+.card{
+  background: var(--white);
+  border:1px solid #eee;
+  padding:16px;
+  border-radius:10px;
+  margin:12px 0;
+}
+.hr{
+  height:1px;
+  background:#efefef;
+  margin:18px 0;
+}
+
+/* ----- Footer ----- */
+.site-footer{
+  background: #121212;
+  color: #ddd;
+  padding:28px var(--container-padding);
+  margin-top:34px;
+}
+.site-footer .container{
+  display:flex;
+  gap:20px;
+  justify-content:space-between;
+  flex-wrap:wrap;
+}
+.site-footer a{ color: #e6e6e6; text-decoration:none; }
+.site-footer a:hover{ text-decoration:underline; }
+
+.footer-bottom{
+  margin-top:18px;
+  font-size:13px;
+  color:#999;
+}
+
+/* ----- small-screen tweaks ----- */
+@media (max-width: 680px){
+  .site-nav{ display:none; } /* simple mobile - hide large nav */
+  .site-header{ padding:12px; }
+  h1.page-title{ font-size:22px; }
+  .page-hero .hero-image{ display:none; }
+  .btn{ padding:8px 12px; font-size:14px; }
+}
+
+/* ----- Accessibility & printing ----- */
+
+/* ----- Table Styling (PSU-style) ----- */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 18px 0;
+  font-size: 15px;
+  color: var(--psu-gray-900);
+}
+
+thead th {
+  background: var(--psu-muted-bg);
+  color: var(--psu-forest);
+  text-align: left;
+  padding: 10px 12px;
+  font-size: 15px;
+  font-weight: 700;
+  border-bottom: 2px solid var(--psu-green);
+}
+
+tbody tr {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+tbody tr:nth-child(even) {
+  background: #fafafa; /* subtle striping */
+}
+
+tbody td {
+  padding: 10px 12px;
+  vertical-align: top;
+  color: var(--psu-gray-900);
+}
+
+tbody td strong {
+  color: var(--psu-forest);
+}
+
+tfoot td {
+  background: var(--psu-muted-bg);
+  padding: 10px 12px;
+  font-weight: 600;
+  border-top: 2px solid var(--psu-green);
+}
+
+/* Optional: Hover highlight */
+tbody tr:hover {
+  background: #f3f7eb; /* light green-tinted hover */
+}
+
