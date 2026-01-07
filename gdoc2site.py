@@ -47,7 +47,8 @@ def filter_bold_italic(css_text):
                     key = key.strip().lower()
                     
                     # 3. Filter: Keep only weight (bold) and style (italic)
-                    if key in ['font-weight', 'font-style', 'color', 'text-decoration']:
+                    # ['font-weight', 'font-style', 'color', 'text-decoration']:
+                    if key in ['font-weight', 'font-style', 'text-decoration']:
                         kept_props.append(f"{key}:{value}")
 
             # 4. Only rebuild the rule if there are properties left to keep
@@ -102,7 +103,7 @@ def export_tab_as_html(creds, doc_id, tab_name, tab_id):
         tab_name (str): The title of the tab you want to export.
         tab_id (str): The id of the tab you want to export.
     """
-    target_dir = os.path.join("articles", tab_name.replace(" ","-").lower())
+    target_dir = os.path.join("website", tab_name.replace(" ","-").lower())
     os.makedirs(target_dir, exist_ok=True)
     export_url = (f"https://docs.google.com/document/d/{doc_id}/export"
             f"?format=html&id={doc_id}&tab={tab_id}")
