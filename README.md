@@ -19,7 +19,7 @@
 ---
 
 ## 📦 Setup
-- Clone repository, create virtual environment, and itnstall dependencies:
+- Clone repository, create virtual environment, and install dependencies:
 ```bash
 git clone https://github.com/wu4f/gdoc2site
 cd gdoc2site
