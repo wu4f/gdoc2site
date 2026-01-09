@@ -14,7 +14,7 @@
 - Extracts the `<body>` content from Google’s HTML export
 - Cleans wrapped Google redirect links (e.g., `https://www.google.com/url?q=...`)
 - Applies a Jinja2-based HTML template (`base.html`) to each exported page
-- Outputs each page to an `articles/` directory
+- Outputs each page to an `website/` directory
 
 ---
 
