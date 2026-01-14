@@ -14,12 +14,12 @@
 - Extracts the `<body>` content from Google’s HTML export
 - Cleans wrapped Google redirect links (e.g., `https://www.google.com/url?q=...`)
 - Applies a Jinja2-based HTML template (`base.html`) to each exported page
-- Outputs each page to an `website/` directory
+- Outputs each page to `website/` directory
 
 ---
 
 ## 📦 Setup
-- Clone repository, create virtual environment, and itnstall dependencies:
+- Clone repository, create virtual environment, and install dependencies:
 ```bash
 git clone https://github.com/wu4f/gdoc2site
 cd gdoc2site
