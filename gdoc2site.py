@@ -220,7 +220,7 @@ if __name__ == '__main__':
     print(doc_id)
     creds = get_creds()
 
-    if doc_has_changed(creds, doc_id) is False:
+    if doc_has_changed(creds, doc_id) is False and tab_id is None:
         exit()
 
     tabs = get_tabs_from_doc(creds, doc_id)
