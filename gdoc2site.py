@@ -84,6 +84,7 @@ def clean_content(html):
 
     body_tag = soup.find("body")
     if body_tag:
+        body_tag.name = "div"
         body_html_content = body_tag.prettify()
 
     style_tag = soup.find("style")
