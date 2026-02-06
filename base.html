@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>{{ title }}</title>
+    <title>{{ title }} | Portland State University, Department of Computer Science</title>
     <base href="https://web.cs.pdx.edu/">
     <meta content="width=device-width,initial-scale=1" name="viewport"/>
+    <meta name="description" content="Information about {{ title }} for the Department of Computer Science at Portland State University in Portland, Oregon.">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <link rel="icon" href="favicon.ico" type="image/vnd.microsoft.icon">
-    <meta name="viewport" content="width=device-width,
-      initial-scale=1.0">
-    <meta name="description" content="">
     <meta name="author" content="http://bootstraptaste.com">
     <!-- css -->
     <link href="css/pdx-style.css" rel="stylesheet">
@@ -21,7 +19,7 @@
   </head>
   <body>
 <header style="background-color:#fff; border-bottom:1px solid #ccc; padding:10px 20px; display:flex; align-items:center; gap:40px; font-family:Arial, sans-serif;">
-<p><a href="https://web.cs.pdx.edu"><img alt="PSU CS Logo" src="images/pdx-cs-logo.png" style="height:80px;"/></a></p>
+<p><a href="https://web.cs.pdx.edu"><img alt="Portland State University Department of Computer Science logo" src="images/pdx-cs-logo.png" style="height:80px;"/></a></p>
 </header>
   <div id="wrapper">
     <section id="content">
@@ -38,10 +36,21 @@
       </div>
     </section>
   </div>
-    <!-- javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../js/jquery.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-  </body>
+</body>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollegeOrUniversity",
+  "name": "Portland State University, Department of Computer Science",
+  "url": "https://web.cs.pdx.edu/",
+  "telephone": "+1-503-725-4036",
+  "email": "csoffice@pdx.edu"
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1900 SW 4th Avenue, Suite 120",
+    "addressLocality": "Portland",
+    "addressRegion": "OR",
+  }
+}
+</script>
 </html>
